@@ -7,8 +7,13 @@
 #include <stdlib.h>
 #include "interface.h"
 
-int main() {
-	char* str = "   This   is   a   sample   string   with    multiple    words   ";
+int main(int argc, char* argv[]) {
+	if (argc < 2) {
+		printf("Usage: %s <string>\n", argv[0]);
+		return 1;
+	}
+
+	char* str = argv[1];
 	char* penultimate_word = get_penultimate_word(str);
 
 	if (penultimate_word != NULL) {
