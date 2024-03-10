@@ -5,6 +5,7 @@
 
 #include "interface.h"
 #include <string.h>
+#include <stdbool.h>
 
 
 /*
@@ -16,25 +17,36 @@
 * Returns:
 * The penultimate word of the string.
 */
-char* get_penultimate_word(const char* str) {
-	char* pointer = strtok(str, " ");
-	char* previous_word = NULL;
-	char* current_word = NULL;
+char* get_penultimate_word(char* str) {
+	int len = strlen(str);
+	char* prepenultimate_word = NULL;
+	bool word_started = false;
+	int prev_word_start_index = -1;
+	int prev_word_end_index = -1;
+	int word_start_index = 0;
+	int word_end_index = 0;
 
-	while (pointer != NULL) {
-		previous_word = current_word;
-		current_word = pointer;
-		pointer = strtok(NULL, " ");
+	for (int i = 0; i < len; i++) {
+		if (str[i] != ' ' && !word_started) {
+			word_started = true;
+			prev_word_start_index = word_start_index;
+			prev_word_end_index = word_end_index;
+			word_start_index = i;
+		} else if (str[i] == ' ' && word_started) {
+			word_end_index = i - 1;
+			word_started = false;
+		}
 	}
 
-	char* penultimate_word = NULL;
-	if (previous_word != NULL) {
-		penultimate_word = strdup(previous_word);
+	if (word_started) {
+		word_end_index = len - 1;
 	}
 
-	delete pointer;
-	delete previous_word;
-	delete current_word;
+	if (prev_word_start_index != -1) {
+		prepenultimate_word = malloc((prev_word_end_index - prev_word_start_index + 2) * sizeof(char));
+		strncpy(prepenultimate_word, &str[prev_word_start_index], prev_word_end_index - prev_word_start_index + 1);
+		prepenultimate_word[prev_word_end_index - prev_word_start_index + 1] = '\0';
+	}
 
-	return penultimate_word;
+	return prepenultimate_word;
 }
