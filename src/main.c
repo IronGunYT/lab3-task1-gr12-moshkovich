@@ -25,5 +25,6 @@ int main(int argc, char* argv[]) {
 		printf("No penultimate word found.\n");
 	}
 
+	free(str);
 	return 0;
 }
