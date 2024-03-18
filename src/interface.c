@@ -23,8 +23,8 @@ char* get_penultimate_word(char* str) {
 	bool word_started = false;
 	int prev_word_start_index = -1;
 	int prev_word_end_index = -1;
-	int word_start_index = 0;
-	int word_end_index = 0;
+	int word_start_index = -1;
+	int word_end_index = -1;
 
 	for (int i = 0; i < len; i++) {
 		if (str[i] != ' ' && !word_started) {

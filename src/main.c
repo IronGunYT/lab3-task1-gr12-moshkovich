@@ -14,6 +14,8 @@ int main(int argc, char* argv[]) {
 	}
 
 	char* str = argv[1];
+	printf("The orignal string is: %s\n", str);
+	
 	char* penultimate_word = get_penultimate_word(str);
 
 	if (penultimate_word != NULL) {
